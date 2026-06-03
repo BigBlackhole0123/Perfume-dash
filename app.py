@@ -1,20 +1,16 @@
 import streamlit as st
 import pandas as pd
-import datetime
 import gspread
 from google.oauth2.service_account import Credentials
 
-st.set_page_config(page_title="Perfume Shop System", layout="wide")
-
-# ตั้งค่าการเชื่อมต่อ
-# ดึงค่าจาก st.secrets โดยตรง
-creds_dict = st.secrets["gcp"]
+# เชื่อมต่อผ่านไฟล์ที่อยู่ใน GitHub ของคุณโดยตรง
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
+# เปลี่ยนชื่อไฟล์ให้ตรงกับไฟล์ที่คุณสร้างใน GitHub
+creds = Credentials.from_service_account_file("service_account.json", scopes=scope)
 client = gspread.authorize(creds)
 
-# ดึง URL จาก Secrets
-spreadsheet_url = st.secrets["gcp"]["spreadsheet"]
+# ลิงก์ตารางของคุณ
+spreadsheet_url = "https://docs.google.com/spreadsheets/d/1ZGdB9tBYAibMva6SnEVGrzRf80j5HHjWLj9Hs1gNd4c/edit"
 sheet = client.open_by_url(spreadsheet_url)
 
 # ดึงข้อมูล
